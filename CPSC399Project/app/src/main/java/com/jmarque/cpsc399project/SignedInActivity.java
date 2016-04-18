@@ -1,11 +1,14 @@
 package com.jmarque.cpsc399project;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class SignedInActivity extends AppCompatActivity {
@@ -15,18 +18,14 @@ public class SignedInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in);
 
-        TextView username = (TextView) findViewById(R.id.mainActivity_username);
+        SharedPreferences sharedPref = this.getSharedPreferences("com.jmarque.cpsc399project", Context.MODE_PRIVATE);
+        String username = sharedPref.getString("username", "username");
 
-        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        username.setText(sharedPreferences.getString("username","null"));
-
-
-
-
+        TextView textView = (TextView) findViewById(R.id.signedIn_username);
+        textView.setText(username);
     }
 
     public void signInClick(View view) {
         startActivity(new Intent(this, SearchingForBeaconActivity.class));
-        // we don't really do anything here so let's just go to the next screen
     }
 }

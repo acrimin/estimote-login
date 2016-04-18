@@ -12,7 +12,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mainActivity_username"
+        android:id="@+id/signedIn_username"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
@@ -26,8 +26,8 @@
         android:id="@+id/mainActivity_loginButton"
         android:background="@color/colorPrimary"
         android:textColor="#fff"
-        android:layout_below="@+id/mainActivity_username"
-        android:layout_alignEnd="@+id/mainActivity_username" />
+        android:layout_below="@+id/signedIn_username"
+        android:layout_alignEnd="@+id/signedIn_username" />
 
     <Button
         android:layout_width="wrap_content"
@@ -38,5 +38,5 @@
         android:background="@color/colorAccent"
         android:textColor="#fff"
         android:layout_alignTop="@+id/mainActivity_loginButton"
-        android:layout_alignStart="@+id/mainActivity_username" />
+        android:layout_alignStart="@+id/signedIn_username" />
 </RelativeLayout>
