@@ -1,6 +1,7 @@
 package com.jmarque.cpsc399project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,13 +20,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SearchingForBeaconActivity extends AppCompatActivity {
 
     private String URL_GET_CLASS = "https://people.cs.clemson.edu/~jmarque/cs399/php/getClass.php";
-
+    private boolean success = false;
     private static final float ROTATE_FROM = 0.0f;
     private static final float ROTATE_TO = 10.0f * 360.0f;// 3.141592654f * 32.0f;
 
@@ -56,8 +60,8 @@ public class SearchingForBeaconActivity extends AppCompatActivity {
             public void run() {
                 //startActivity(new Intent(SearchingForBeaconActivity.this, ClassOptions.class));
                 //    ideally we would wait until we found the beacon. but i don't think we have time for that let's just hard code this for now ssshhhhhh
-                //we need to get hte class info
-nesw
+                //we need to get the class info
+                new createUser().execute();
             }
         }, 1000);
 
@@ -73,7 +77,7 @@ nesw
                     HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
                     //add request header
-                    conn.setRequestMethod("GET");
+                    conn.setRequestMethod("POST");
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
                     conn.setUseCaches(false);
@@ -81,14 +85,18 @@ nesw
                     conn.setReadTimeout(10000);
                     conn.setConnectTimeout(15000);
 
-//                    Log.i("params: ", params[0] + "," + params[1]);
-                    String urlParams = "username=" + username;// + "&password=" + params[1];
+                    //todo: actually find a beacon
+                    String uuid = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
+                    int major = 35445;
+                    int minor = 37670;
+                    String urlParams = "UUID=" + uuid + "&major=" + Integer.toString(major) + "&minor=" + Integer.toString(minor);
 
                     DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
                     wr.writeBytes(urlParams);
                     wr.flush();
                     wr.close();
 
+                    Log.e("params: ", urlParams);
 
                     conn.connect();
 
@@ -112,25 +120,38 @@ nesw
                         JSONObject jObject = new JSONObject(ret);
                         if (jObject.getInt("success") == 1) {
                             success = true;
-                            int idStudent = jObject.getInt("id");
+                            int idCourse = jObject.getInt("idCourse");
+                            String className = jObject.getString("className");
+
+                            SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+
+
+                            String startString = jObject.getString("startTime");
+                            String endString = jObject.getString("endTime");
+                            Date startTime = parser.parse(startString);
+                            Date endTime = parser.parse(endString);
+
+                            String profName = jObject.getString("name");
+
+
                             // save the student id to shared preferences so you can use it later.
                             SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-                            sharedPreferences.edit().putString("username", username).apply();
-                            sharedPreferences.edit().putInt("idStudent", idStudent).apply();
+                            sharedPreferences.edit().putInt("idCourse", idCourse).apply();
+                            sharedPreferences.edit().putString("className", className).apply();
+                            sharedPreferences.edit().putString("startTime", startTime.toString()).apply();
+                            sharedPreferences.edit().putString("endTime", endTime.toString()).apply();
+                            sharedPreferences.edit().putString("profName", profName).apply();
 
-                            Log.e("Success", "it was a success");
 
                         }
-//                        Log.e("json object?",jObject.toString());
-//                        JSONArray jArray = jObject.getJSONArray("myArray");
 
-
-//                        publishProgress(ret);
                         return ret;
                     }
                 } catch (java.io.IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             } catch (MalformedURLException e) {
@@ -148,7 +169,9 @@ nesw
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (success) {
-                //startActivity(new Intent(MainActivity.this, SignedInActivity.class));
+                startActivity(new Intent(SearchingForBeaconActivity.this, ClassOptions.class));
+            } else {
+                //no beeacon found :(
             }
 
 

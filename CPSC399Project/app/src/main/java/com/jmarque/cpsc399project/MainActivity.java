@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editText = (EditText) findViewById(R.id.mainActivity_username);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        if(!sharedPreferences.getString("username","").equals("")){
+            startActivity(new Intent(this,SignedInActivity.class));
+        }
+
     }
 
     public void loginClick(View view) {
