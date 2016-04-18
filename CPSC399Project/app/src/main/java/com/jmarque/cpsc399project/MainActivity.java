@@ -1,6 +1,8 @@
 package com.jmarque.cpsc399project;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         username = editText.getText().toString();
         if (username.equals("")) {
             // username field is empty can't do anything with an empty field
-            Toast.makeText(this,"Please enter a username",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please enter a username", Toast.LENGTH_LONG).show();
         } else {
             new createUser().execute();
 
@@ -60,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             URL urlObj;
             try {
                 urlObj = new URL(URL_CREATE_USER);
-                try{
-                    HttpURLConnection conn = (HttpURLConnection)urlObj.openConnection();
+                try {
+                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
                     //add request header
                     conn.setRequestMethod("GET");
@@ -86,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
                     int serverResponseCode = conn.getResponseCode();
                     Log.i("response code: ", Integer.toString(serverResponseCode));
                     //Good return
-                    if (serverResponseCode == 200 || serverResponseCode==201) {
+                    if (serverResponseCode == 200 || serverResponseCode == 201) {
                         Log.i("response code2: ", Integer.toString(serverResponseCode));
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         StringBuilder sb = new StringBuilder();
                         String line;
-                        while ((line = br.readLine()) != null){
+                        while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
                         br.close();
@@ -101,12 +103,15 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("return value: ", ret);
 
                         JSONObject jObject = new JSONObject(ret);
-                        if(jObject.getInt("success") == 1){
+                        if (jObject.getInt("success") == 1) {
                             success = true;
                             int idStudent = jObject.getInt("id");
                             // save the student id to shared preferences so you can use it later.
+                            SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putString("username", username).apply();
+                            sharedPreferences.edit().putInt("idStudent", idStudent).apply();
 
-                            Log.e("Succes","it was a success");
+                            Log.e("Success", "it was a success");
 
                         }
 //                        Log.e("json object?",jObject.toString());
@@ -116,18 +121,18 @@ public class MainActivity extends AppCompatActivity {
 //                        publishProgress(ret);
                         return ret;
                     }
-                }catch(java.io.IOException e){
+                } catch (java.io.IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }catch(MalformedURLException e){
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
             return null;
         }
 
-        protected void onProgressUpdate(String... result){
+        protected void onProgressUpdate(String... result) {
             super.onProgressUpdate(result);
          /*   Log.i("on progress update: ", result[0]);
             System.out.println(result[0]);
@@ -154,9 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-//            System.out.println(result);
-            if(success){
-
+            if (success) {
+                startActivity(new Intent(MainActivity.this, SignedInActivity.class));
             }
 
 
