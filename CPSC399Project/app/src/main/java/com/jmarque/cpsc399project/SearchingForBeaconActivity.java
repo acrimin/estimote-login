@@ -1,5 +1,24 @@
 package com.jmarque.cpsc399project;
 
+
+/*
+* UUID      B9407F30-F5F8-466E-AFF9-25556B57FE6D
+*
+* Green:    major: 35445
+*           minor: 37670
+*           MAC  : E0:C5:93:26:8A:75
+*
+* Blue:     major: 26819
+*           minor: 33810
+*           MAC  : F3:0A:84:12:68:C3
+*
+* Purple:   major: 65035
+*           minor: 24542
+*           MAC  : F0:B1:5F:DE:FE:0B
+*
+* */
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +29,8 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+
+import com.estimote.sdk.SystemRequirementsChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,4 +200,10 @@ public class SearchingForBeaconActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
+
+    }
 }
