@@ -25,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/signedIn_username"
+        android:text="username"
+        android:id="@+id/mainActivity_username"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp" />
