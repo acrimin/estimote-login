@@ -14,60 +14,84 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentBottom="false"
         android:layout_alignParentTop="true">
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="A"
-            android:id="@+id/btnA"
-            android:layout_below="@+id/btnE"
-            android:layout_centerHorizontal="true"
-            android:minHeight="50dp"
-            android:layout_weight="1"
-            android:textSize="50sp" />
+            android:layout_weight="1">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="B"
-            android:id="@+id/btnB"
-            android:layout_below="@+id/btnC"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textSize="50sp" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="a"
+                android:id="@+id/btnA"
+                android:textSize="50sp"
+                android:onClick="btnClick"
+                android:backgroundTint="#ffd6d7d7" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="C"
-            android:id="@+id/btnC"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textSize="50sp" />
+        </RelativeLayout>
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="D"
-            android:id="@+id/btnD"
-            android:layout_below="@+id/btnA"
-            android:layout_alignStart="@+id/btnA"
-            android:layout_weight="1"
-            android:textSize="50sp" />
+            android:layout_weight="1">
 
-        <Button
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="B"
+                android:id="@+id/btnB"
+                android:textSize="50sp"
+                android:onClick="btnClick"
+                android:backgroundTint="#ffd6d7d7" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="E"
-            android:id="@+id/btnE"
-            android:layout_below="@+id/btnB"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textSize="50sp" />
+            android:layout_weight="1" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="C"
+                android:id="@+id/btnC"
+                android:textSize="50sp"
+                android:onClick="btnClick"
+                android:backgroundTint="#ffd6d7d7" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="D"
+                android:id="@+id/btnD"
+                android:textSize="50sp"
+                android:onClick="btnClick"
+                android:backgroundTint="#ffd6d7d7" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="E"
+                android:id="@+id/btnE"
+                android:textSize="50sp"
+                android:onClick="btnClick" />
+        </RelativeLayout>
 
     </LinearLayout>
+
 </RelativeLayout>

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Class: CPSC 3990\nInstructor: Roy Pargas\nTime: 4:40 - 5:30\nUsername: acrimin\n"
+        android:text="Class: \nInstructor: \nTime: \nUsername: \n"
         android:id="@+id/textViewInfo"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
